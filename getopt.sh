@@ -1,7 +1,7 @@
 #!/bin/bash
 #-
 #- Usage:
-#-  $ switch-server-sg [-c|-o] | [-h]
+#-  $ $0 [-c|-o] | [-h]
 #-
 #- Options:
 #-  -c: Revoke access from 0.0.0.0/0
@@ -10,9 +10,8 @@
 #-
 
 # ENV
-ANSIBLE="/opt/company/git/win-manage"
-#export AWS_CONFIG_FILE=${ANSIBLE}/.aws/config
-profile="company-ec2-operate"
+ANSIBLE="/opt/company/git/dev-g"
+profile="company-ec2"
 GroupID="sg-xxxxxxxxxxxxxx"
 region="ap-northeast-1"
 
