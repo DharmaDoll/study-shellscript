@@ -1,0 +1,35 @@
+#! /bin/bash
+
+#Port(service)Monitering / Netcat呼んでるだけ
+
+#そもそも標準入力でnetcatはできないので引数でデータをもらい受けるしかなさそう↓の感じで
+#cat ip.list | xargs -n 1 -I@ ./thisScript.sh @
+
+monitorService(){
+ for port in 80 443
+   do
+     nc -z -w 2 $host $port
+     if [ $? -ne 0 ];then
+       d=`date "+%Y-%m-%d:%H:%M:%S"`
+       echo "$d Failed at $host:$port" >> "$faillog" 
+       fi
+   done
+}
+
+
+echo $1
+#host="www.yahoo.co.jp"
+host=$1
+faillog="fail-port.log"
+
+if [ $# == 1 ]; then
+   if [[ "$host" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3} ]]; then
+     monitorService
+   else
+     echo invaid ip address
+     exit
+   fi
+else
+  echo "Usage: `basename $0` <ip address | hostname> Monitoring HTTP/HTTPS by default "
+fi
+
